@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hr.dao.config.mapper.employeeMapper">
+	<resultMap type="employee" 				id="employee-resultmap">
+		<id column = "employee_id" 			property = "employeeId"/>
+		<result column = "employee_name" 	property = "employeeName"/>
+		<result column = "email"			property = "email"/>
+		<result column = "job_position" 	property = "jobPosition"/>
+		<result column = "salary"			property = "salary"/>
+		<result column = "hire_date" 		property = "hireDate"/>
+		<result column = "department_id" 	property = "departmentId"/>
+	</resultMap>
+	
+	<!-- resultMap의 extends 속성 : 기존 resultMap 설정을 상속. -->
+	<resultMap type="employee" id="employee-department-resultmap" extends="employee-resultmap">
+		<!-- association 태그 : property - instance 변수명 javaType : instance변수 타입 -->
+		<association property="department" 		javaType = "hr.vo.Department">
+		<!-- employee 객체의 instance 변수인 department를 가리킨다.-->
+			<result  column = "department_id" 	property = "departmentId"/>
+			<result  column = "department_name"	property = "departmentName"/>
+			<result	 column = "location"		property = "location"/>
+		</association>
+	</resultMap>
+	<!-- 위의 reaultmap과 아래의 resultmap2는 같은것이다. -->
+	<resultMap type="employee" id="employee-department-resultmap2" extends="employee-resultmap">
+		<!-- association 태그 : property - instance 변수명 javaType : instance변수 타입 -->
+		<association property="department" resultMap = "hr.dao.config.mapper.departmentMapper.department-resultmap"/>
+		<!-- department-resultmap에 javaType이 있기 때문에 생략이 가능하다. -->
+		
+	</resultMap>
+	
+	<select id = "selectEmployeeList" resultMap = "employee-resultmap">
+		SELECT  employee_id, 
+				employee_name, 
+				email, 
+				job_position, 
+				salary, 
+				hire_date, 
+				department_id
+				
+		FROM   employee
+	</select>
+	
+	<select id="selectEmployeeById" parameterType = "_int" resultMap = "employee-department-resultmap2">
+	
+		SELECT	e.employee_id, 
+				e.employee_name, 
+				e.email, 
+				e.job_position, 
+				e.salary, 
+				e.hire_date, 
+				d.department_id,
+				d.department_name,
+				d.location
+				
+		FROM	employee e,
+				department d
+				
+		WHERE	e.department_id = d.department_id(+)
+			<!-- Foreign Key		  Primary Key -->
+			<!-- Main Column		  Add Column(+)-->
+		AND		e.employee_id = #{value}
+	</select>
+	<!-- 영업부서에 소속된 직원들을 조회한다. -->
+		
+</mapper>
