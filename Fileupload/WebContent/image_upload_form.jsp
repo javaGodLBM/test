@@ -15,7 +15,7 @@
   사진 : <input type="file" name="image"><br>
   <input type= "submit" value= "전송">
 </form>
-<h2>여러 사진 업로드 폼</h2>
+<h2>여러 사진 업로드 폼 hi</h2>
 <form action="${initParam.rootPath}/imageupload" 
 	  method="post" 
 	  enctype="multipart/form-data">
