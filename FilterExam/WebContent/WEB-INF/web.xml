@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1">
+  <display-name>FilterExam</display-name>
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+  <servlet>
+  	<servlet-name>a</servlet-name>
+  	<servlet-class>servlet.AServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>a</servlet-name>
+  	<url-pattern>/a</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>b</servlet-name>
+  	<servlet-class>servlet.BServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>b</servlet-name>
+  	<url-pattern>/b</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>c</servlet-name>
+  	<servlet-class>servlet.CServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>c</servlet-name>
+  	<url-pattern>/c</url-pattern>
+  </servlet-mapping>
+  
+  <filter>
+  	<filter-name>encodFilter</filter-name>
+  	<filter-class>filter.EncodingFilter</filter-class>
+  	<init-param>
+  		<param-name>encoding</param-name>
+  		<param-value>UTF-8</param-value>
+  	</init-param>
+  </filter>
+  
+  <filter-mapping>
+  	<filter-name>encodFilter</filter-name>
+  	<url-pattern>/*</url-pattern>
+  	<!-- urlpattern : 사용자가 요청한 url의 servlet의 실행 전후로 일해라 -->
+  </filter-mapping>
+</web-app>
